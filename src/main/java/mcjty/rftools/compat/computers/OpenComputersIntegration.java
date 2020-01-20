@@ -21,5 +21,6 @@ public class OpenComputersIntegration {
         Driver.add(new EndergenicDriver.OCDriver());
         if(CrafterConfiguration.enabled.get())
             Driver.add(new CrafterDriver.OCDriver());
+        Driver.add(new ElevatorDriver.OCDriver());
     }
 }

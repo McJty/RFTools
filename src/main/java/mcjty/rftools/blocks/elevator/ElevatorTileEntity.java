@@ -636,7 +636,7 @@ public class ElevatorTileEntity extends GenericEnergyReceiverTileEntity implemen
     }
 
     // Can be called on any elevator block. Not only the contoller (bottom one)
-    private void movePlatformHere() {
+    public void movePlatformHere() {
         // Try to find a platform and move it to this elevator.
         // What about TE blocks in front of platform?
 
