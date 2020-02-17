@@ -95,7 +95,7 @@ dependencies {
     deobfCompile "cofh:RedstoneFlux:${redstoneflux_version}"
     deobfCompile "net.darkhax.tesla:Tesla-${tesla_version}"
     //deobfCompile "pl.asie.charset:charset:0.5.0.164"
-    compile "team.chisel.ctm:CTM:MC1.12-0.2.3.12"
+    compile "team.chisel.ctm:CTM:MC1.12.2-1.0.1.30"
 
     deobfCompile "com.github.mcjty:intwheel:${intwheel_version}"
     if (!project.hasProperty("singleproject")) {

@@ -61,10 +61,12 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     public static final String CMD_REMOVE = "scanner.remove";
     public static final String CMD_TOGGLEROUTABLE = "scanner.toggleRoutable";
     public static final String CMD_SETVIEW = "scanner.setView";
+    public static final String CMD_UPDATESORTMODE = "scanner.updateSortMode";
 
     public static final Key<Integer> PARAM_INDEX = new Key<>("index", Type.INTEGER);
     public static final Key<BlockPos> PARAM_POS = new Key<>("pos", Type.BLOCKPOS);
     public static final Key<Boolean> PARAM_VIEW = new Key<>("view", Type.BOOLEAN);
+    public static final Key<String> PARAM_SORTMODE = new Key<>("sortmode", Type.STRING);
 
     public static final String ACTION_CLEARGRID = "clearGrid";
 
@@ -74,6 +76,8 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     // Client side data returned by CMD_SCANNER_INFO
     public static long rfReceived = 0;
     public static boolean exportToCurrentReceived = false;
+    
+    private String sortMode = "";
 
     @Override
     public IAction[] getActions() {
@@ -479,7 +483,7 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
             return s -> s.getDisplayName().toLowerCase().contains(split);
         }
     }
-
+    
     public int getRadius() {
         return radius;
     }
@@ -1030,6 +1034,7 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
         readBufferFromNBT(tagCompound, inventoryHelper);
         radius = tagCompound.getInteger("radius");
         exportToCurrent = tagCompound.getBoolean("exportC");
+        sortMode = tagCompound.getString("sortMode");
         if (tagCompound.hasKey("wideview")) {
             openWideView = tagCompound.getBoolean("wideview");
         } else {
@@ -1069,6 +1074,7 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
         tagCompound.setInteger("radius", radius);
         tagCompound.setBoolean("exportC", exportToCurrent);
         tagCompound.setBoolean("wideview", openWideView);
+        tagCompound.setString("sortMode", sortMode);
         tagCompound.setTag("grid", craftingGrid.writeToNBT());
     }
 
@@ -1106,6 +1112,9 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
             return true;
         } else if (CMD_SETVIEW.equals(command)) {
             setOpenWideView(params.get(PARAM_VIEW));
+            return true;
+        } else if (CMD_UPDATESORTMODE.equals(command)) {
+            setSortMode(params.get(PARAM_SORTMODE));
             return true;
         }
         return false;
@@ -1224,5 +1233,14 @@ public class StorageScannerTileEntity extends GenericEnergyReceiverTileEntity im
     @Override
     public int[] getSlotsForFace(EnumFacing side) {
         return SLOTS;
+    }
+
+    public String getSortMode() {
+        return sortMode;
+    }
+
+    public void setSortMode(String sortMode) {
+        this.sortMode = sortMode;
+        markDirty();
     }
 }

@@ -2,6 +2,11 @@
 *.ipr
 *.iws
 eclipse/
+.vscode/
+.settings/
+.project
+.classpath
+*.launch
 out/
 bin/
 .idea/
